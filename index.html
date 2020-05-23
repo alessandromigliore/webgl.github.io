@@ -29,7 +29,7 @@
             import {
               AbsoluteOrientationSensor,
               RelativeOrientationSensor
-            } from '../motion-sensors.js';
+            } from '/sensor-polyfills/motion-sensors.js';
 
             const params = new URLSearchParams(new URL(window.location.href).search.slice(1));
             const relative = !!Number(params.get("relative"));
