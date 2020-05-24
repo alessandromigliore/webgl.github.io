@@ -35,7 +35,7 @@
             const relative = !!Number(params.get("relative"));
 	    const coordinateSystem = params.get("coord");
 
-            let container, sensor, camera, scene, renderer, model;
+            let container, sensor, camera, scene, renderer, model,model2;
 
             initScene();
             if (navigator.permissions) {
@@ -91,8 +91,8 @@
                     var objLoader = new THREE.OBJLoader(manager);
                     objLoader.setMaterials(materials);
                     objLoader.load('resources/phone.obj', object => {
-                        model = object;
-                        scene.add(model);
+                        model2 = object;
+                        scene.add(model2);
                   });
                 });
 
@@ -125,6 +125,8 @@
                     console.log("Sensor is not available.");
                   }
                 }
+                sensor.onreading = () => model2.quaternion.fromArray(sensor.quaternion).inverse();
+
                 sensor.start();
             }
 
