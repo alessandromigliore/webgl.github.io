@@ -62,7 +62,7 @@
             }
 
             renderScene();
-            renderScene2();
+            renderScene();
 
             function initScene() {
                 container = document.createElement('div');
@@ -154,13 +154,10 @@
                 requestAnimationFrame(renderScene);
                 camera.lookAt(scene.position);
                 renderer.render(scene, camera);
-            }
-
-            function renderScene2() {
-                requestAnimationFrame(renderScene2);
-                camera.lookAt(scene2.position);
                 renderer.render(scene2, camera);
             }
+
+            
 
             let log = console.log;
             console.log = (message, ...rest) => {
