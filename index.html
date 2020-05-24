@@ -35,7 +35,7 @@
             const relative = !!Number(params.get("relative"));
 	    const coordinateSystem = params.get("coord");
 
-            let container, sensor, camera, scene, renderer, model,model2;
+            let container, sensor, camera, scene, scene2, renderer, model,model2;
 
             initScene();
             if (navigator.permissions) {
@@ -71,19 +71,21 @@
                 camera.position.set(0, 0, 10)
 
                 scene = new THREE.Scene();
+                scene2 = new THREE.Scene();
 
                 var ambientLight = new THREE.AmbientLight(0x404040, 6);
                 scene.add(ambientLight);
-                scene.rotation.x = -90 * Math.PI/180;
+                scene2.add(ambientLight);
+                scene2.rotation.x = -90 * Math.PI/180;
 
                 var manager = new THREE.LoadingManager();
                 var mtlLoader = new THREE.MTLLoader(manager);
                 mtlLoader.setTexturePath('resources/');
-                mtlLoader.load('resources/DeadTree.mtl', materials => {
+                mtlLoader.load('resources/phone.mtl', materials => {
                     materials.preload();
                     var objLoader = new THREE.OBJLoader(manager);
                     objLoader.setMaterials(materials);
-                    objLoader.load('resources/DeadTree.obj', object => {
+                    objLoader.load('resources/phone.obj', object => {
                         model = object;
                         scene.add(model);
                   });
@@ -96,9 +98,9 @@
                     objLoader.setMaterials(materials);
                     objLoader.load('resources/phone.obj', object => {
                         model2 = object;
-                        model2.rotation.x = Math.PI / 2;
-                        model2.position.set(0, 5, 5);
-                        scene.add(model2);
+                        
+                        
+                        scene2.add(model2);
                         
                   });
                 });
