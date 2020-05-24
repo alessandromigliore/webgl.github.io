@@ -35,7 +35,7 @@
             const relative = !!Number(params.get("relative"));
 	    const coordinateSystem = params.get("coord");
 
-            let container, sensor, camera, scene,scene2, renderer, model,model2;
+            let container, sensor, camera, scene, renderer, model,model2;
 
             initScene();
             if (navigator.permissions) {
@@ -72,11 +72,11 @@
                 camera.position.set(0, 0, 10)
 
                 scene = new THREE.Scene();
-                scene2 = new THREE.Scene();
+                
                 var ambientLight = new THREE.AmbientLight(0x404040, 6);
                 scene.add(ambientLight);
                 
-                scene2.add(ambientLight);
+                
 
                 var manager = new THREE.LoadingManager();
                 var mtlLoader = new THREE.MTLLoader(manager);
@@ -100,7 +100,7 @@
                         model2 = object;
                         
                         model2.position.set(0, 5, 5);
-                        scene2.add(model2);
+                        scene.add(model2);
                         
                   });
                 });
@@ -152,18 +152,8 @@
 
             function renderScene() {
                 requestAnimationFrame(renderScene);
-                renderer.autoClear = true;
-
-                
-
-//render scene1
-renderer.render(scene1, camera);
-
-//prevent canvas from being erased with next .render call
-renderer.autoClear = false;
-
-//just render scene2 on top of scene1
-renderer.render(scene2, camera);
+                camera.lookAt(scene.position);
+                renderer.render(scene, camera);
                 
             }
 
