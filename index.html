@@ -35,7 +35,7 @@
             const relative = !!Number(params.get("relative"));
 	    const coordinateSystem = params.get("coord");
 
-            let container, sensor, camera, scene, renderer, model,model2;
+            let container, sensor, camera, scene,scene2, renderer, model,model2;
 
             initScene();
             if (navigator.permissions) {
@@ -71,10 +71,10 @@
                 camera.position.set(0, 0, 10)
 
                 scene = new THREE.Scene();
-
+                scene2 = new THREE.Scene();
                 var ambientLight = new THREE.AmbientLight(0x404040, 6);
                 scene.add(ambientLight);
-                
+                scene2.add(ambientLight);
                 scene.rotation.x =  Math.PI/2;
 
                 var manager = new THREE.LoadingManager();
@@ -98,7 +98,8 @@
                     objLoader.load('resources/phone.obj', object => {
                         model2 = object;
                         
-                        scene.add(model2);
+                        model2.position.set(0, 5, 5);
+                        scene2.add(model2);
                         
                   });
                 });
@@ -152,6 +153,12 @@
                 requestAnimationFrame(renderScene);
                 camera.lookAt(scene.position);
                 renderer.render(scene, camera);
+            }
+
+            function renderScene2() {
+                requestAnimationFrame(renderScene2);
+                camera.lookAt(scene2.position);
+                renderer.render(scene2, camera);
             }
 
             let log = console.log;
