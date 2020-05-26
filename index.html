@@ -81,11 +81,11 @@
                 var manager = new THREE.LoadingManager();
                 var mtlLoader = new THREE.MTLLoader(manager);
                 mtlLoader.setTexturePath('resources/');
-                mtlLoader.load('resources/old_jar.mtl', materials => {
+                mtlLoader.load('resources/jar.mtl', materials => {
                     materials.preload();
                     var objLoader = new THREE.OBJLoader(manager);
                     objLoader.setMaterials(materials);
-                    objLoader.load('resources/old_jar.obj', object => {
+                    objLoader.load('resources/jar.obj', object => {
                         model = object;
                         scene.add(model);
                   });
