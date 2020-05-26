@@ -65,7 +65,7 @@
                 document.body.appendChild(container);
 
                 camera = new THREE.PerspectiveCamera(500, window.innerWidth / window.innerHeight, 1, 200);
-                camera.position.set(0, 0, 10)
+                camera.position.set(0, 0, 3)
 
                 scene = new THREE.Scene();
 
@@ -86,11 +86,11 @@
                 });
 				
 				mtlLoader.setTexturePath('resources/');
-                mtlLoader.load('resources/phone.mtl', materials => {
+                mtlLoader.load('resources/jar.mtl', materials => {
                     materials.preload();
                     var objLoader = new THREE.OBJLoader(manager);
                     objLoader.setMaterials(materials);
-                    objLoader.load('resources/phone.obj', object => {
+                    objLoader.load('resources/jar.obj', object => {
                         model2 = object;
                         scene.add(model2);
                   });
@@ -125,7 +125,7 @@
                     console.log("Sensor is not available.");
                   }
                 }
-                sensor.onreading = () => model2.quaternion.fromArray(sensor.quaternion).inverse();
+                
 
                 sensor.start();
             }
