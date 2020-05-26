@@ -69,7 +69,7 @@
                 document.body.appendChild(container);
 
                 camera = new THREE.PerspectiveCamera(500, window.innerWidth / window.innerHeight, 1, 200);
-                camera.position.set(0, 0, 3)
+                camera.position.set(0, 0, 10)
 
                 scene = new THREE.Scene();
                 
@@ -81,13 +81,13 @@
                 var manager = new THREE.LoadingManager();
                 var mtlLoader = new THREE.MTLLoader(manager);
                 mtlLoader.setTexturePath('resources/');
-                mtlLoader.load('resources/jar.mtl', materials => {
+                mtlLoader.load('resources/phone.mtl', materials => {
                     materials.preload();
                     var objLoader = new THREE.OBJLoader(manager);
                     objLoader.setMaterials(materials);
-                    objLoader.load('resources/jar.obj', object => {
+                    objLoader.load('resources/phone.obj', object => {
                         model = object;
-                        model2.position.set(-3, 0, 0);
+                        
                         scene.add(model);
                   });
                 });
