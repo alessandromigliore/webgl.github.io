@@ -29,7 +29,7 @@
             import {
               AbsoluteOrientationSensor,
               RelativeOrientationSensor
-            } from '../motion-sensors.js';
+            } from '/webgl.github.io/sensor-polyfills/motion-sensors.js';
 
             const params = new URLSearchParams(new URL(window.location.href).search.slice(1));
             const relative = !!Number(params.get("relative"));
@@ -46,19 +46,23 @@
                        .then(results => {
                             if (results.every(result => result.state === "granted")) {
                                 initSensor();
+                                initSensor2();
                             } else {
                                 console.log("Permission to use sensor was denied.");
                             }
                        }).catch(err => {
                             console.log("Integration with Permissions API is not enabled, still try to start app.");
                             initSensor();
+                            initSensor2();
                        });
             } else {
                 console.log("No Permissions API, still try to start app.");
                 initSensor();
+                initSensor2();
             }
 
             renderScene();
+            
 
             function initScene() {
                 container = document.createElement('div');
@@ -68,9 +72,11 @@
                 camera.position.set(0, 0, 10)
 
                 scene = new THREE.Scene();
-
+                
                 var ambientLight = new THREE.AmbientLight(0x404040, 6);
                 scene.add(ambientLight);
+                
+                
 
                 var manager = new THREE.LoadingManager();
                 var mtlLoader = new THREE.MTLLoader(manager);
@@ -92,7 +98,10 @@
                     objLoader.setMaterials(materials);
                     objLoader.load('resources/phone.obj', object => {
                         model2 = object;
+                        
+                        model2.position.set(0, 5, 5);
                         scene.add(model2);
+                        
                   });
                 });
 
@@ -125,8 +134,19 @@
                     console.log("Sensor is not available.");
                   }
                 }
-                
+                sensor.start();
+            }
 
+            function initSensor2() {
+                const options = { frequency: 60, coordinateSystem };
+                console.log(JSON.stringify(options));
+                sensor = relative ? new RelativeOrientationSensor(options) : new AbsoluteOrientationSensor(options);
+                sensor.onreading = () => model2.quaternion.fromArray(sensor.quaternion).inverse();
+                sensor.onerror = (event) => {
+                  if (event.error.name == 'NotReadableError') {
+                    console.log("Sensor is not available.");
+                  }
+                }
                 sensor.start();
             }
 
@@ -134,7 +154,10 @@
                 requestAnimationFrame(renderScene);
                 camera.lookAt(scene.position);
                 renderer.render(scene, camera);
+                
             }
+
+            
 
             let log = console.log;
             console.log = (message, ...rest) => {

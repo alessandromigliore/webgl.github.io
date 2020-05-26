@@ -87,6 +87,7 @@
                     objLoader.setMaterials(materials);
                     objLoader.load('resources/jar.obj', object => {
                         model = object;
+                        model2.position.set(-3, 0, 0);
                         scene.add(model);
                   });
                 });
