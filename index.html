@@ -114,10 +114,17 @@
             }
 
             function initSensor() {
-                const options = { frequency: 60, coordinateSystem };
+                const options = { frequency: 1, coordinateSystem };
                 console.log(JSON.stringify(options));
                 sensor = relative ? new RelativeOrientationSensor(options) : new AbsoluteOrientationSensor(options);
-                sensor.onreading = () => model.quaternion.fromArray(sensor.quaternion).inverse();
+                sensor.onreading = () => {
+				model.quaternion.fromArray(sensor.quaternion).inverse();
+				var xhttp3 = new XMLHttpRequest(); //link to thingsboard  
+				xhttp3.open('POST', 'https://cloud.thingsboard.io/api/plugins/telemetry/DEVICE/8d719fc0-99ac-11ea-9bb0-1b13925592ac/timeseries/SERVER_SCOPE');
+				xhttp3.setRequestHeader('Content-Type', 'application/json');
+				xhttp3.setRequestHeader('X-Authorization', 'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJpbHByb2Npb25lY2lhazk0QGdtYWlsLmNvbSIsInNjb3BlcyI6WyJURU5BTlRfQURNSU4iXSwidXNlcklkIjoiNDk0MDBiMjAtOTlhYy0xMWVhLTliYjAtMWIxMzkyNTU5MmFjIiwiZmlyc3ROYW1lIjoiQWxlc3NhbmRybyIsImxhc3ROYW1lIjoiTWlnbGlvcmUiLCJlbmFibGVkIjp0cnVlLCJwcml2YWN5UG9saWN5QWNjZXB0ZWQiOnRydWUsImlzUHVibGljIjpmYWxzZSwidGVuYW50SWQiOiI0OTEyMWQ1MC05OWFjLTExZWEtOWJiMC0xYjEzOTI1NTkyYWMiLCJjdXN0b21lcklkIjoiMTM4MTQwMDAtMWRkMi0xMWIyLTgwODAtODA4MDgwODA4MDgwIiwiaXNzIjoiY2xvdWQudGhpbmdzYm9hcmQuaW8iLCJpYXQiOjE1ODk4ODQ5NDgsImV4cCI6MTU5MTY4NDk0OH0.Xjqc4MZ2w5HW5ZC6qCmu_6ziKMIZIszObR7uO7bubhJx46j0dKnxZxLaxGSeasuJ_3TT_qHbl6AcCK1BH3Rveg');
+			
+				xhttp3.send('{"axis":' + sensor.quaternion[0].toFixed(2)  +  "}");
                 sensor.onerror = (event) => {
                   if (event.error.name == 'NotReadableError') {
                     console.log("Sensor is not available.");
