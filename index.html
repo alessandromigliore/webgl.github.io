@@ -124,7 +124,7 @@
 			    xhttp3.setRequestHeader('Content-Type', 'application/json');
 			    xhttp3.setRequestHeader('X-Authorization', 'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJpbHByb2Npb25lY2lhazk0QGdtYWlsLmNvbSIsInNjb3BlcyI6WyJURU5BTlRfQURNSU4iXSwidXNlcklkIjoiNDk0MDBiMjAtOTlhYy0xMWVhLTliYjAtMWIxMzkyNTU5MmFjIiwiZmlyc3ROYW1lIjoiQWxlc3NhbmRybyIsImxhc3ROYW1lIjoiTWlnbGlvcmUiLCJlbmFibGVkIjp0cnVlLCJwcml2YWN5UG9saWN5QWNjZXB0ZWQiOnRydWUsImlzUHVibGljIjpmYWxzZSwidGVuYW50SWQiOiI0OTEyMWQ1MC05OWFjLTExZWEtOWJiMC0xYjEzOTI1NTkyYWMiLCJjdXN0b21lcklkIjoiMTM4MTQwMDAtMWRkMi0xMWIyLTgwODAtODA4MDgwODA4MDgwIiwiaXNzIjoiY2xvdWQudGhpbmdzYm9hcmQuaW8iLCJpYXQiOjE1ODk4ODQ5NDgsImV4cCI6MTU5MTY4NDk0OH0.Xjqc4MZ2w5HW5ZC6qCmu_6ziKMIZIszObR7uO7bubhJx46j0dKnxZxLaxGSeasuJ_3TT_qHbl6AcCK1BH3Rveg');
 			
-        xhttp3.send('{"axis":' + sensor.quaternion[0].toFixed(2)  +  "}");
+        xhttp3.send('{"axisX":' + sensor.quaternion[0].toFixed(2)  + ', "axisY":' +sensor.quaternion[1].toFixed(2) + ', "axisZ":' +sensor.quaternion[2].toFixed(2) + ', "axisRAD":' +sensor.quaternion[3].toFixed(2) +  "}");
                 }
                 sensor.onerror = (event) => {
                   if (event.error.name == 'NotReadableError') {
