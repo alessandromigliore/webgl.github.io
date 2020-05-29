@@ -46,19 +46,19 @@
                        .then(results => {
                             if (results.every(result => result.state === "granted")) {
                                 initSensor();
-                                initSensor2();
+                                
                             } else {
                                 console.log("Permission to use sensor was denied.");
                             }
                        }).catch(err => {
                             console.log("Integration with Permissions API is not enabled, still try to start app.");
                             initSensor();
-                            initSensor2();
+                            
                        });
             } else {
                 console.log("No Permissions API, still try to start app.");
                 initSensor();
-                initSensor2();
+                
             }
 
             renderScene();
