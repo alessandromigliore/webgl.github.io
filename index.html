@@ -24,6 +24,7 @@
         <script src="js/three.min.js"></script>
         <script src="js/OBJLoader.js"></script>
         <script src="js/MTLLoader.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.0.1/mqttws31.min.js" type="text/javascript"></script>
 
         <script type="module">
             import {
@@ -151,6 +152,41 @@
                 div.innerText = message;
                 log.call(console, message, ...rest);
             }
+			
+			
+		// Create a client instance
+var client = new Paho.MQTT.Client("localhost", 9001, "clientId");
+
+// set callback handlers
+client.onConnectionLost = onConnectionLost;
+client.onMessageArrived = onMessageArrived;
+
+// connect the client
+client.connect({onSuccess:onConnect});
+
+
+// called when the client connects
+function onConnect() {
+// Once a connection has been made, make a subscription and send a message.
+console.log("onConnect");
+client.subscribe("v1/devices/me/telemetry");
+var message = new Paho.MQTT.Message("Hello");
+message.destinationName = "v1/devices/me/telemetry";
+client.send(message);
+console.log("sent" + message);
+}
+
+// called when the client loses its connection
+function onConnectionLost(responseObject) {
+if (responseObject.errorCode !== 0) {
+console.log("onConnectionLost:"+responseObject.errorMessage);
+}
+}
+
+// called when a message arrives
+function onMessageArrived(message) {
+console.log("onMessageArrived:"+message.payloadString);
+}	
 
         </script>
         <div id="console"></div>
