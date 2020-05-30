@@ -170,7 +170,7 @@ function onConnect() {
 // Once a connection has been made, make a subscription and send a message.
 console.log("onConnect");
 client.subscribe("v1/devices/me/telemetry");
-var message = new Paho.MQTT.Message("Hello");
+var message = new Paho.MQTT.Message('{"key1":"value1", "key2":true, "key3": 3.0, "key4": 4}');
 message.destinationName = "v1/devices/me/telemetry";
 client.send(message);
 console.log("sent" + message);
